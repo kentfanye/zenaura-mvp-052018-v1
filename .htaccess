@@ -1,0 +1,40 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Set base directory
+RewriteBase /
+
+# Redirect to HTTPS (uncomment in production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Security headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+
+# Prevent directory listing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "^(config\.php|\.htaccess)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP settings
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+# Error documents
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php 
