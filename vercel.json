@@ -12,8 +12,4 @@
       "dest": "/$1"
     }
   ],
-  "env": {
-    "QWEN_API_KEY": "@qwen_api_key",
-    "QWEN_API_URL": "@qwen_api_url"
-  }
 } 
